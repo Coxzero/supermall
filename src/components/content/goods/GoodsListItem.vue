@@ -1,7 +1,7 @@
 <template>
 	<div class="goods-item">
 		<a :href="goodsItem.link">
-		<img :src="goodsItem.show.img" alt="">
+		<img :src="goodsItem.show.img" alt="" @load= "imageLoad">
 		</a>
 		<div class="goods-info">
 			<p>{{goodsItem.title}}</p>
@@ -20,8 +20,13 @@
 				default(){
 					return []
 				}
+			},
+		},
+		methods:{
+		imageLoad(){
+				//事件总线
+			this.$bus.$emit('itemImageLoad')
 			}
-			
 		}
 	}
 </script>

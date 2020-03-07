@@ -4,7 +4,8 @@
 			<div slot="center">购物街</div>
 		</nav-bar>
 		
-	<scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll">
+	<scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true"
+	> <!-- @pullingUp="loadMore" -->
 				<home-swiper :banners="banners"></home-swiper>
 				<recommend-view :recommends='recommends'></recommend-view>
 				<feature-view></feature-view>
@@ -69,6 +70,15 @@
 			this.getHomeGoods('pop')
 			this.getHomeGoods('new')
 			this.getHomeGoods('sell')
+			
+			//3.监听item中的图片加载完成
+			
+		
+		},
+		mounted(){
+			this.$bus.$on('itemImageLoad',() => {
+			this.$refs.scroll.refresh()
+				})
 		},
 		methods:{
 			/*
@@ -93,6 +103,10 @@
 		 contentScroll(position){
 			this.isShowBackTop = (-position.y) > 1000
 		 },
+		 // loadMore(){
+			//  this.getHomeGoods(this.currentType)
+			//  this.$refs.scroll.scroll.refresh()  //从新计算可滚动区域
+		 // },
 			/*
 			网络请求相关方法
 			*/
@@ -109,6 +123,8 @@
 				getHomeGoods(type,page).then(res => {
 					this.goods[type].list.push(...res.data.list)
 					this.goods[type].page += 1 //多一组数据 页码加一 
+					
+					// this.$refs.scroll.finishPullUp()
 				})
 			}
 		
