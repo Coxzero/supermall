@@ -27,10 +27,10 @@
 	import TabControl from 'components/content/tabControl/TabControl'
 	import GoodsList from 'components/content/goods/GoodsList'
 	import Scroll from 'components/common/scroll/Scroll'
-	import BackTop  from 'components/content/backTop/BackTop'
 	
 	import {getHomeMultidata,getHomeGoods} from "network/home";
 	import {debounce} from "common/utils"
+	import {itemListenerMixin,backTopMixin} from 'common/mixin'
 	// import Swiper from 'components/common/swiper/Swiper'
 	// import SwiperItem from 'components/common/swiper/SwiperItem'
 	
@@ -44,8 +44,9 @@
 			TabControl,
 			GoodsList,
 			Scroll,
-			BackTop
+		
 		},
+		mixins:[itemListenerMixin,backTopMixin],
 		data(){
 			return{
 				banners:[],
@@ -57,10 +58,11 @@
 					'sell':{page:0,list:[]},
 				},
 				currentType:'pop',
-				isShowBackTop:false,
+			
 				tabOffsetTop:0,
 				isTabfixed:false,
-				saveY:0
+				saveY:0,
+				
 				}
 		},
 		computed:{
@@ -68,12 +70,18 @@
 				 return this.goods[this.currentType].list
 			 }
 		},
-		activated(){
+		//每次 切换的时候记录上次的位置（钩子函数）
+		activated(){//活跃的时候
 			this.$refs.scroll.scrollTo(0,this.saveY,0)
 			this.$refs.scroll.refresh()
+			
 		},
-		deactivated(){
+		deactivated(){//不活跃的时候 离开首页的时候
+		//1.保存Y值
 			this.saveY = this.$refs.scroll.getScrollY()
+			
+			//2.取消全局事件监听
+			this.$bus.$off('itemImageLoad',this.itemImgListener)
 		},
 		created(){
 			//请求多个数据
@@ -88,12 +96,7 @@
 		
 		},
 		mounted(){
-			//1.图片加载完成的事件监听
-			const refresh = debounce(this.$refs.scroll.refresh,50)
-			
-			this.$bus.$on('itemImageLoad',() => {
-			refresh()
-				})
+			//混入
 		},
 		methods:{
 			/*
@@ -113,9 +116,6 @@
 			 }
 			 this.$refs.tabControl1.currentIndex = index;
 			 this.$refs.tabControl2.currentIndex = index;
-		 },
-		 backClick(){
-				this.$refs.scroll.scrollTo(0,0)
 		 },
 		 contentScroll(position){
 			 //1.判断BackTop是否显示
@@ -181,6 +181,7 @@
 	.content{
 		overflow: hidden;
 		position: absolute;
+		
 		top: 44px;
 		bottom: 49px;
 		left: 0;

@@ -27,6 +27,8 @@
 		methods:{
 			titleClick(index){
 				this.currentIndex = index
+				//联动效果
+				this.$emit('titleClick',index);
 			},
 			backClick(){
 				this.$router.back()

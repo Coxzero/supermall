@@ -1,7 +1,7 @@
 <template>
 	<div class="goods-item" @click="itemClick">
 		
-		<img :src="goodsItem.show.img" alt="" @load= "imageLoad">
+		<img :src="showImage" alt="" @load= "imageLoad">
 		
 		<div class="goods-info">
 			<p>{{goodsItem.title}}</p>
@@ -20,21 +20,38 @@
 				default(){
 					return []
 				}
-			},
+			}
+		},
+		computed:{
+			showImage() {
+				return this.goodsItem.image|| this.goodsItem.show.img
+			}
 		},
 		methods:{
 		imageLoad(){
 				//事件总线
-			this.$bus.$emit('itemImageLoad')
+				this.$bus.$emit('itemImageLoad')
+			// if(this.$route.path.indexOf('/home')){
+			// 	this.$bus.$emit('homeitemImageLoad')
+			// }else if(this.$route.path.indexOf('/detail')){
+			// 	this.$bus.$emit('detailitemImageLoad')
+			// }
+			
 			},
 			itemClick(){
-				this.$router.push('/detail' + this.goodsItem.iid)
+				this.$router.push('/detail/' + this.goodsItem.iid)
+				/*this.$router.push({
+					path:'/detail',
+					query:{
+						iid:this.goodsItem.iid
+					}
+				})*/
 			}
 		}
 	}
 </script>
 
-<style>
+<style scoped>
 	 .goods-item {
 	    padding-bottom: 40px;
 	    position: relative;

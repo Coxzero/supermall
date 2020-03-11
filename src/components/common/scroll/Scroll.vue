@@ -30,6 +30,7 @@
 		mounted(){
 			//1.创建BScroll对象
 			this.scroll = new BScroll(this.$refs.wrapper,{
+				 
 				click:true,
 				probeType:this.probeType,
 				pullUpLoad:this.pullUpLoad

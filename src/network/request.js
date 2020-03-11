@@ -12,9 +12,7 @@ export function request(config){
 	//请求拦截
 	instance.interceptors.request.use(config => {
 		return config
-
 	}, err => {
-	
 	})
 	//2.2响应拦截
 	instance.interceptors.response.use(res => {
@@ -23,7 +21,6 @@ export function request(config){
 	}, err => {
 		console.log(err)
 	})
-	
 	//3.发送真正的网络请求
 	 return instance(config)
 

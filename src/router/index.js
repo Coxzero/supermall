@@ -34,7 +34,8 @@ const routes = [
 		component:Category
 	},
 	{
-		path:'/detail:iid',
+		path:'/detail/:iid',
+		//path:'/detail',
 		component:Detail
 	}
 ]

@@ -1,5 +1,6 @@
 <template>
 	<div class="wrapper">
+		
 		<ul class="content">
 			<li>哈哈</li>
 			<li>哈哈</li>
@@ -102,13 +103,16 @@
 			<li>哈哈</li>
 			<li>哈哈</li>
 		</ul>
+	<back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
 	</div>
 </template>
 
 <script>
+	import {backTopMixin} from 'common/mixin'
 	import BScroll from 'better-scroll'
 	export default{
 		name:'Category',
+		mixins:[backTopMixin],
 		data(){
 			return{
 				scroll:null
