@@ -1,7 +1,7 @@
 <template>
   <div class="shop-info" v-if = "Object.keys(shop).length !== 0">
     <div class="shop-top">
-      <img :src="shop.shopLogo">
+      <img :src="shop.logo">
       <span class="title">{{shop.name}}</span>
     </div>
     <div class="shop-middle">
