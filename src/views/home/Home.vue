@@ -92,8 +92,6 @@
 			this.getHomeGoods('sell')
 			
 			//3.监听item中的图片加载完成
-			
-		
 		},
 		mounted(){
 			//混入
@@ -191,9 +189,5 @@
 		position: relative;
 		z-index: 9;
 	}
-/* 	.content{
-		height: calc(100% - 93px);
-		overflow: hidden;
-		margin-top: 44px;
-	} */
+
 </style>
